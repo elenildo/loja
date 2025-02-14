@@ -33,7 +33,6 @@ public class CategoryService {
         Page<?> page = datatables.getSearch().isEmpty()?
                 categoryRepository.findAll(datatables.getPageable()):
                 categoryRepository.findAllByNameContaining(datatables.getSearch(), datatables.getPageable());
-
         return datatables.getResponse(page);
     }
 }

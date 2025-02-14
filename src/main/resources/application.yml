@@ -1,0 +1,19 @@
+spring:
+  application:
+  name: authentication
+
+  profiles:
+    active: local
+
+#server:
+#  port: 8090
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5433/database
+#    driver-class-name: org.postgresql.Driver
+#    username: postgres
+#    password: password
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+

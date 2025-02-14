@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/site :: header}"></div>
+    <div th:replace="~{fragments/site :: datatables-css}"></div>
+    <title>Meu Site</title>
+</head>
+<body>
+<div th:replace="~{fragments/site :: menu}"></div>
+<div class="container">
+    <h3>Categorias</h3>
+    <table id="table-categories" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Excluir</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div th:replace="~{fragments/site :: scripts}"></div>
+<div th:replace="~{fragments/site :: datatables-js}"></div>
+<script th:src="@{/js/categories.js}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/site :: header}"></div>
+    <title>Login</title>
+</head>
+<body>
+    <div th:replace="~{fragments/site :: menu}"></div>
+    <div class="container w-50">
+        <h3>Login</h3>
+        <form method="POST" th:action="@{/login}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuário</label>
+                <input type="email" name="username" class="form-control" id="username">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" name="password" class="form-control" id="password">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Lembrar</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/site :: scripts}"></div>
+</body>
+</html>

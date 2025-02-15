@@ -8,8 +8,14 @@
 </head>
 <body>
 <div th:replace="~{fragments/site :: menu}"></div>
+
 <div class="container">
+    <nav class="nav border my-2 bg-light">
+        <a class="nav-link active" href="/admin/categories/create">Novo</a>
+    </nav>
+
     <h3>Categorias</h3>
+
     <table id="table-categories" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
         <thead class="thead-dark">
         <tr>

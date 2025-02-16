@@ -1,8 +1,12 @@
 package com.elenildo.loja.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
+import com.elenildo.loja.dto.ProductDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -11,16 +15,24 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Product extends ModelEntity{
 
     @Column(unique = true, nullable = false)
     private String title;
 
-    @Lob
+    @Column(columnDefinition="TEXT")
     private String description;
 
     private BigDecimal price;
 
     @ManyToOne
     private Category category;
+
+    public Product(ProductDto productDto) {
+        title = productDto.getTitle().trim();
+        description = productDto.getDescription();
+        price = productDto.getPrice();
+        category = productDto.getCategory();
+    }
 }

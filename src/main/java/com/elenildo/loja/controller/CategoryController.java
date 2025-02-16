@@ -28,14 +28,14 @@ public class CategoryController {
     }
 
     @GetMapping("datatables/categories")
-    public ResponseEntity<?> getEspecialidades(HttpServletRequest request) {
+    public ResponseEntity<?> getCategories(HttpServletRequest request) {
         return ResponseEntity.ok(categoryService.getCategories(request));
     }
 
     @GetMapping("create")
     public ModelAndView create() {
         var mv = new ModelAndView("admin/categories/create-category");
-        return mv.addObject("category", new CategoryDto());
+        return mv.addObject("categoryDto", new CategoryDto());
     }
 
     @PostMapping

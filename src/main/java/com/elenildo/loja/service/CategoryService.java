@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -34,5 +35,9 @@ public class CategoryService {
                 categoryRepository.findAll(datatables.getPageable()):
                 categoryRepository.findAllByNameContaining(datatables.getSearch(), datatables.getPageable());
         return datatables.getResponse(page);
+    }
+
+    public List<Category> getAll() {
+        return categoryRepository.findAllByOrderByName();
     }
 }

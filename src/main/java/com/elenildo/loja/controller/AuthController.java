@@ -31,7 +31,7 @@ public class AuthController {
     @PostMapping("register")
     public String registerSave(@Valid UserDto userDto, BindingResult result) {
         if(! userDto.getConfirm().equals(userDto.getPassword()))
-            result.addError(new FieldError("registerDto", "confirm", "As senhas não coincidem."));
+            result.addError(new FieldError("userDto", "confirm", "As senhas não coincidem."));
 
         if(userService.userExists(userDto.getUsername().trim()))
             result.addError(new FieldError("userDto", "username", "Já existe um usuário com este e-mail"));

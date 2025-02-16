@@ -4,22 +4,24 @@
 <head>
     <div th:replace="~{fragments/site :: header}"></div>
     <div th:replace="~{fragments/site :: datatables-css}"></div>
-    <title>Categorias</title>
+    <title>Produtos</title>
 </head>
 <body>
 <div th:replace="~{fragments/site :: menu}"></div>
 
 <div class="container">
-    <nav class="nav border mt-2 mb-4 bg-light justify-content-between">
-        <span class="nav-link font-weight-bold">Categorias</span>
-        <a class="nav-link active" href="/admin/categories/create">Novo</a>
+    <nav class="nav border mt-2 mb-4 mb-4 bg-light justify-content-between">
+        <span class="nav-link font-weight-bold">Produtos</span>
+        <a class="nav-link active" href="/admin/products/create">Novo</a>
     </nav>
 
-    <table id="table-categories" class="table table-sm table-striped table-bordered nowrap w-100">
+    <table id="table-products" class="table table-sm table-striped table-bordered nowrap w-100">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Nome</th>
+            <th scope="col">Título</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Preço</th>
             <th scope="col">Editar</th>
             <th scope="col">Excluir</th>
         </tr>
@@ -29,6 +31,6 @@
 
 <div th:replace="~{fragments/site :: scripts}"></div>
 <div th:replace="~{fragments/site :: datatables-js}"></div>
-<script th:src="@{/js/categories.js}"></script>
+<script th:src="@{/js/products.js}"></script>
 </body>
 </html>

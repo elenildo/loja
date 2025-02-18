@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 50)

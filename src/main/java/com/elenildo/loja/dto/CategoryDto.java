@@ -1,5 +1,6 @@
 package com.elenildo.loja.dto;
 
+import com.elenildo.loja.model.Category;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -10,8 +11,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 50)
     private String name;
+
+    public CategoryDto(Category category){
+        id = category.getId();
+        name  = category.getName();
+    }
 }

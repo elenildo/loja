@@ -18,12 +18,12 @@ public abstract class ModelEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @CreationTimestamp
-    private Instant creationDate;
+    protected Instant creationDate;
 
     @UpdateTimestamp
-    private Instant alterDate;
+    protected Instant alterDate;
 
 }

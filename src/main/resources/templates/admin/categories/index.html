@@ -8,13 +8,16 @@
 </head>
 <body>
 <div th:replace="~{fragments/site :: menu}"></div>
+<div th:replace="~{fragments/modal :: modal-confirm}"></div>
 
 <div class="container">
     <nav class="nav border mt-2 mb-4 bg-light justify-content-between">
         <span class="nav-link font-weight-bold">Categorias</span>
         <a class="nav-link active" href="/admin/categories/create">Novo</a>
     </nav>
-
+    <div class="alert alert-danger" role="alert" th:if="${error}">
+        <span th:text="${error}"></span>
+    </div>
     <table id="table-categories" class="table table-sm table-striped table-bordered nowrap w-100">
         <thead class="thead-dark">
         <tr>

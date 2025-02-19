@@ -45,4 +45,8 @@ public class CategoryService {
     public Optional<Category> findById(Long id) {
         return categoryRepository.findById(id);
     }
+
+    public void remove(Long id) {
+        categoryRepository.deleteById(id);
+    }
 }

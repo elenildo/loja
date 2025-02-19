@@ -50,6 +50,26 @@ public class CategoryController {
         return "admin/categories/create-category";
     }
 
+    @GetMapping("remove/{id}")
+    public String remove(@PathVariable Long id,RedirectAttributes attributes) {
+        var category = categoryService.findById(id);
+        if(category.isEmpty()) {
+            attributes.addFlashAttribute("error", "ID inválido");
+            return "redirect:/admin/categories";
+        }
+        try {
+            categoryService.remove(id);
+        }catch (Exception e) {
+            attributes.addFlashAttribute(
+                    "error",
+                    "Não foi possível remover. Esta categoria está associada a um ou mais produtos"
+            );
+            return "redirect:/admin/categories";
+        }
+        attributes.addFlashAttribute("message", "Removido com sucesso.");
+        return "redirect:/admin/categories";
+    }
+
     @PostMapping
     public String save(@Valid CategoryDto categoryDto, BindingResult result) {
         if(categoryService.categoryExists(categoryDto.getName().trim()))
@@ -59,7 +79,6 @@ public class CategoryController {
             return "admin/categories/create-category";
 
         categoryService.create(categoryDto);
-
         return "redirect:/admin/categories";
 
     }

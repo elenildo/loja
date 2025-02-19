@@ -12,6 +12,12 @@ $(document).ready(function () {
             data: 'data'
         },
         columns: [
+            {data: 'images',
+                "render": function(images) {
+                    if(images != null)
+                        return `<img src="${'file:///'+ images[0]}"/>`;
+                }
+            },
             {data: 'id'},
             {data: 'title'},
             {data: 'category.name'},

@@ -6,6 +6,7 @@ import com.elenildo.loja.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -44,7 +47,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public String save(@Valid ProductDto productDto, BindingResult result, Model model) {
+    public String save(@Valid ProductDto productDto, @RequestParam("images") MultipartFile[] images, BindingResult result, Model model) {
         if(productService.productExists(productDto.getTitle().trim()))
             result.addError(new FieldError("productDto", "title", "Já existe um produto com este título"));
 
@@ -52,9 +55,16 @@ public class ProductController {
             model.addAttribute("categories", categoryService.getAll()); //Reloads category list
             return "admin/products/create-product";
         }
-
-        productService.create(productDto);
-
+        try {
+            productService.create(productDto, images);
+        }catch (Exception e) {
+            model.addAttribute("categories", categoryService.getAll()); //Reloads category list
+            result.addError(new FieldError(
+                    "productDto",
+                    "images",
+                    "Erro ao fazer upload de imagens" + e.getMessage()));
+            return "admin/products/create-product";
+        }
         return "redirect:/admin/products";
     }
 }

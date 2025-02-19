@@ -1,5 +1,6 @@
 package com.elenildo.loja.dto;
 
+import com.elenildo.loja.model.Category;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -15,4 +16,9 @@ public class CategoryDto {
     @NotBlank
     @Size(min = 3, max = 50)
     private String name;
+
+    public CategoryDto(Category category){
+        id = category.getId();
+        name  = category.getName();
+    }
 }

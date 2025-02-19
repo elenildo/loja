@@ -17,14 +17,14 @@ $(document).ready(function () {
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return `<a class="btn btn-success btn-sm btn-block" href="/categories/edit/${id}"
+                    return `<a class="btn btn-success btn-sm" href="/admin/categories/${id}"
                         role="button"><i class="fas fa-edit"></i></a>`;
                 }
             },
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return `<a class="btn btn-danger btn-sm btn-block" href="/categories/remove/${id}"
+                    return `<a class="btn btn-danger btn-sm" href="/admin/categories/remove/${id}"
                     	role="button" data-toggle="modal" data-target="#confirm-modal">
                     	<i class="fas fa-times-circle"></i></a>`;
                 }

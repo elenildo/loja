@@ -19,6 +19,7 @@ public class Category extends ModelEntity{
     private String name;
 
     public Category(CategoryDto categoryDto) {
+        id = categoryDto.getId();
         name = categoryDto.getName();
     }
 }

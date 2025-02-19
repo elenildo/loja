@@ -7,12 +7,13 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("admin/categories")
@@ -36,6 +37,17 @@ public class CategoryController {
     public ModelAndView create() {
         var mv = new ModelAndView("admin/categories/create-category");
         return mv.addObject("categoryDto", new CategoryDto());
+    }
+
+    @GetMapping("{id}")
+    public String update(@PathVariable Long id, ModelMap model, RedirectAttributes attributes) {
+        var category = categoryService.findById(id);
+        if(category.isEmpty()){
+            attributes.addFlashAttribute("error", "ID inválido");
+            return "redirect:/admin/categories";
+        }
+        model.addAttribute(new CategoryDto(category.get()));
+        return "admin/categories/create-category";
     }
 
     @PostMapping

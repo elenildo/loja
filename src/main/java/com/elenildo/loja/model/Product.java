@@ -36,6 +36,7 @@ public class Product extends ModelEntity{
     private Set<String> images;
 
     public Product(ProductDto productDto) {
+        id = productDto.getId();
         title = productDto.getTitle().trim();
         description = productDto.getDescription();
         price = productDto.getPrice();

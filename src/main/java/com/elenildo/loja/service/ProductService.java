@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -67,5 +68,13 @@ public class ProductService {
                 productRepository.findAllByTitleContaining(datatables.getSearch(), datatables.getPageable());
         return datatables.getResponse(page);
 
+    }
+
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    public void remove(Long id) {
+        productRepository.deleteById(id);
     }
 }

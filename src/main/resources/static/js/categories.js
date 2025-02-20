@@ -17,7 +17,7 @@ $(document).ready(function () {
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return `<a class="btn btn-success btn-sm" href="/admin/categories/${id}"
+                    return `<a class="btn btn-success btn-sm" href="/admin/categories/update/${id}"
                         role="button"><i class="fas fa-edit"></i></a>`;
                 }
             },

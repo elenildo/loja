@@ -15,12 +15,7 @@
         <span class="nav-link font-weight-bold">Categorias</span>
         <a class="nav-link active" href="/admin/categories/create">Novo</a>
     </nav>
-    <div class="alert alert-danger" role="alert" th:if="${error}">
-        <span th:text="${error}"></span>
-    </div>
-    <div class="alert alert-success" role="alert" th:if="${message}">
-        <span th:text="${message}"></span>
-    </div>
+    <div th:replace="~{fragments/site :: messages}"></div>
     <table id="table-categories" class="table table-sm table-striped table-bordered nowrap w-100">
         <thead class="thead-dark">
         <tr>
@@ -36,24 +31,5 @@
 <div th:replace="~{fragments/site :: scripts}"></div>
 <div th:replace="~{fragments/site :: datatables-js}"></div>
 <script th:src="@{/js/categories.js}"></script>
-<script type="text/javascript">
-		$(function() {
-			$('[data-toggle="tooltip"]').tooltip()
-		});
-
-		var url = '';
-
-		$('table').on('click', 'a', function() {
-			url = $(this).attr('href');
-		});
-
-		$("#btnOk").on('click', function() {
-			document.location.href = url;
-		});
-
-		$("#btnCancel").on('click', function() {
-			url = '';
-		});
-</script>
 </body>
 </html>

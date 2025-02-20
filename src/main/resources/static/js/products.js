@@ -25,14 +25,14 @@ $(document).ready(function () {
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return `<a class="btn btn-success btn-sm btn-block" href="/products/edit/${id}"
+                    return `<a class="btn btn-success btn-sm" href="/admin/products/update/${id}"
                         role="button"><i class="fas fa-edit"></i></a>`;
                 }
             },
             {orderable: false,
              data: 'id',
                 "render": function(id) {
-                    return `<a class="btn btn-danger btn-sm btn-block" href="/products/remove/${id}"
+                    return `<a class="btn btn-danger btn-sm" href="/admin/products/remove/${id}"
                     	role="button" data-toggle="modal" data-target="#confirm-modal">
                     	<i class="fas fa-times-circle"></i></a>`;
                 }

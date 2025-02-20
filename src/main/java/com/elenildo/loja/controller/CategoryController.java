@@ -39,7 +39,7 @@ public class CategoryController {
         return mv.addObject("categoryDto", new CategoryDto());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("update/{id}")
     public String update(@PathVariable Long id, ModelMap model, RedirectAttributes attributes) {
         var category = categoryService.findById(id);
         if(category.isEmpty()){

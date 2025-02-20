@@ -1,6 +1,7 @@
 package com.elenildo.loja.dto;
 
 import com.elenildo.loja.model.Category;
+import com.elenildo.loja.model.Product;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,13 +12,14 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class ProductDto {
+
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 50)
@@ -33,4 +35,12 @@ public class ProductDto {
     private Category category;
 
     private Set<MultipartFile> images;
+
+    public ProductDto(Product product) {
+        id = product.getId();
+        title = product.getTitle().trim();
+        description = product.getDescription();
+        price = product.getPrice();
+        category = product.getCategory();
+    }
 }

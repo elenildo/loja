@@ -84,7 +84,35 @@
     <script	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
     <script	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        var url = '';
+
+        $('table').on('click', 'a', function() {
+            url = $(this).attr('href');
+        });
+
+        $("#btnOk").on('click', function() {
+            document.location.href = url;
+        });
+
+        $("#btnCancel").on('click', function() {
+            url = '';
+        });
+    </script>
 </th:block>
+
+<div th:fragment="messages" id="messages">
+    <div class="alert alert-danger" role="alert" th:if="${error}">
+        <span th:text="${error}"></span>
+    </div>
+    <div class="alert alert-success" role="alert" th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
 
 
 

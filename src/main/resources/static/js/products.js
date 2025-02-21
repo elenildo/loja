@@ -15,7 +15,7 @@ $(document).ready(function () {
             {data: 'images',
                 "render": function(images) {
                     if(images != null)
-                        return `<img src="${'file:///'+ images[0]}"/>`;
+                        return `<img src="${images[0]}" class="w-50"/>`;
                 }
             },
             {data: 'id'},

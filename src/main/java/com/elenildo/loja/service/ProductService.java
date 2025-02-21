@@ -27,7 +27,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final Datatables datatables;
 
-    @Value("${user.home}")
+    @Value("${upload.images}")
     private String homeDirectory;
 
     public ProductService(ProductRepository productRepository, Datatables datatables) {
@@ -47,7 +47,7 @@ public class ProductService {
 
     private Set<String> saveFiles(MultipartFile[] files) throws IOException {
         Set<String> paths = new HashSet<>();
-        String uploadDirectory = homeDirectory+"/apps/loja/images/products/";
+        String uploadDirectory = homeDirectory+"products/";
         File directory = new File(uploadDirectory);
         Path path;
         String fullPath;
@@ -61,7 +61,7 @@ public class ProductService {
             fullPath = uploadDirectory + file.getOriginalFilename();
             path = Paths.get(fullPath);
             Files.write(path, bytes);
-            paths.add(fullPath);
+            paths.add("/upload/images/products/" + file.getOriginalFilename());
         }
         return paths;
     }

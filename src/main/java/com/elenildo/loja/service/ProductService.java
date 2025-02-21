@@ -6,7 +6,6 @@ import com.elenildo.loja.dto.ProductDto;
 import com.elenildo.loja.model.Product;
 import com.elenildo.loja.repository.ProductRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -23,11 +22,18 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final Datatables datatables;
+
+    @Value("${user.home}")
+    private String homeDirectory;
+
+    public ProductService(ProductRepository productRepository, Datatables datatables) {
+        this.productRepository = productRepository;
+        this.datatables = datatables;
+    }
 
     public boolean productExists(String title) {
         return productRepository.existsByTitleIgnoreCase(title);
@@ -41,7 +47,7 @@ public class ProductService {
 
     private Set<String> saveFiles(MultipartFile[] files) throws IOException {
         Set<String> paths = new HashSet<>();
-        String uploadDirectory = "/home/apps/loja/images/products/";
+        String uploadDirectory = homeDirectory+"/apps/loja/images/products/";
         File directory = new File(uploadDirectory);
         Path path;
         String fullPath;
@@ -75,6 +81,23 @@ public class ProductService {
     }
 
     public void remove(Long id) {
+        removeFiles(id);
         productRepository.deleteById(id);
     }
+
+    private void removeFiles(Long id) {
+        var product = findById(id);
+        if(product.isPresent()){
+            if(product.get().getImages() != null)
+                product.get().getImages().forEach(path -> {
+                    File fileToDelete = new File(path);
+                    fileToDelete.delete();
+                });
+        }
+    }
+
+    public Optional<Product> findByTitleIgnoreCase(String title) {
+        return productRepository.findByTitleIgnoreCase(title);
+    }
+
 }

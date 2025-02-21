@@ -1,13 +1,11 @@
 package com.elenildo.loja.controller;
 
-import com.elenildo.loja.dto.CategoryDto;
 import com.elenildo.loja.dto.ProductDto;
 import com.elenildo.loja.service.CategoryService;
 import com.elenildo.loja.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,7 +59,8 @@ public class ProductController {
 
     @PostMapping
     public String save(@Valid ProductDto productDto, BindingResult result, @RequestParam("images") MultipartFile[] images, Model model) {
-        if(productService.productExists(productDto.getTitle().trim()))
+        var product = productService.findByTitleIgnoreCase(productDto.getTitle().trim());
+        if(product.isPresent() && !product.get().getId().equals(productDto.getId()))
             result.addError(new FieldError("productDto", "title", "Já existe um produto com este título"));
 
         if(result.hasErrors()) {

@@ -22,4 +22,7 @@ public class Category extends ModelEntity{
         id = categoryDto.getId();
         name = categoryDto.getName();
     }
+    public Category(Long id) {
+        this.id = id;
+    }
 }

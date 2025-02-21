@@ -17,4 +17,5 @@ spring:
 #    hibernate:
 #      ddl-auto: update
 #upload:
-#  images: src/main/resources/static/upload/images/ #inside src/main/resources/static
+#  images: src/main/resources/static/upload/images/
+#  csv: src/main/resources/static/upload/csv/

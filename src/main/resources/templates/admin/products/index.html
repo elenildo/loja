@@ -13,7 +13,15 @@
 <div class="container">
     <nav class="nav border mt-2 mb-4 mb-4 bg-light justify-content-between">
         <span class="nav-link font-weight-bold">Produtos</span>
-        <a class="nav-link active" href="/admin/products/create">Novo</a>
+        <div>
+            <form method="post" th:action="@{/admin/products/csv}" enctype="multipart/form-data">
+                <label for="file">Subir CSV</label>
+                <input type="file" name="file" id="file" accept=".xlsx, .xls, .csv">
+                <button>OK</button>
+            </form>
+            <a class="nav-link active" href="/admin/products/create">Novo</a>
+        </div>
+
     </nav>
     <div th:replace="~{fragments/site :: messages}"></div>
     <table id="table-products" class="table table-sm table-striped table-bordered nowrap w-100">

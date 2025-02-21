@@ -3,6 +3,7 @@ package com.elenildo.loja.controller;
 import com.elenildo.loja.dto.ProductDto;
 import com.elenildo.loja.service.CategoryService;
 import com.elenildo.loja.service.ProductService;
+import com.opencsv.exceptions.CsvException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("admin/products")
@@ -76,6 +79,16 @@ public class ProductController {
                     "images",
                     "Erro ao fazer upload de imagens" + e.getMessage()));
             return "admin/products/create-product";
+        }
+        return "redirect:/admin/products";
+    }
+
+    @PostMapping("csv")
+    public String uploadCsv(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            productService.saveCsvFile(file);
+        } catch (IOException | CsvException e) {
+            throw new RuntimeException(e);
         }
         return "redirect:/admin/products";
     }

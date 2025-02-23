@@ -4,7 +4,9 @@ import com.elenildo.loja.enums.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -16,10 +18,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
 //                .csrf(AbstractHttpConfigurer::disable)
-
                 .logout(config -> config.logoutSuccessUrl("/"))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/", "/home").permitAll();
+                    authorize.requestMatchers("/").permitAll();
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers("/logout").permitAll();
                     authorize.requestMatchers("/register").permitAll();

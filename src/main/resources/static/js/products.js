@@ -12,10 +12,13 @@ $(document).ready(function () {
             data: 'data'
         },
         columns: [
-            {data: 'images',
-                "render": function(images) {
-                    if(images != null)
-                        return `<img src="${images[0]}" class="w-50"/>`;
+            {orderable: false,
+            data: 'images',
+                "render": function(images, type, data) {
+                    if(images != null && type=='display'){
+                        data = `<img src="${images[0]}" class="w-50"/>`;
+                    return data;
+                    }
                 }
             },
             {data: 'id'},
@@ -24,9 +27,12 @@ $(document).ready(function () {
             {data: 'price'},
             {orderable: false,
              data: 'id',
-                "render": function(id) {
-                    return `<a class="btn btn-success btn-sm" href="/admin/products/update/${id}"
-                        role="button"><i class="fas fa-edit"></i></a>`;
+                "render": function(id, type, data) {
+                    if(type=='display'){
+                        data =  `<a class="btn btn-success btn-sm" href="/admin/products/update/${id}"
+                                 role="button"><i class="fas fa-edit"></i></a>`;
+                        return data;
+                    }
                 }
             },
             {orderable: false,

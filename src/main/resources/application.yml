@@ -15,7 +15,9 @@ spring:
 #    password: password
 #  jpa:
 #    hibernate:
-#      ddl-auto: update
+#      ddl-auto: none
+#  thymeleaf:
+#    cache: false
 #upload:
 #  images: src/main/resources/static/upload/images/
 #  csv: src/main/resources/static/upload/csv/

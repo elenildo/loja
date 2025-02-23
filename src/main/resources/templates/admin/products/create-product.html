@@ -40,7 +40,8 @@
         </div>
         <div class="mb-3">
             <label for="images" class="form-label">Imagens</label>
-            <input type="file" th:field="*{images}" id="images" multiple>
+            <input type="file" th:field="*{images}" id="images" multiple
+                   accept=".jpg, .jpeg, .png, .gif, .bmp, .webp" class="form-control">
             <p th:if="${#fields.hasErrors('images')}" th:errorclass="text-danger" th:errors="*{images}"></p>
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>

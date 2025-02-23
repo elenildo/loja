@@ -1,0 +1,15 @@
+<div th:fragment="product-card" th:each="product : ${products}" class="col-xs-6 col-sm-6 col-md-3 col-lg-2">
+    <div class="d-flex flex-column mt-4 shadow p-3 bg-white" style="height:300px">
+        <div class="mb-2">
+            <img th:if="${product.image != null}" th:src="@{${product.image}}" class="w-100">
+            <img th:unless="${product.image != null}" th:src="@{/upload/images/products/cara.png}" class="w-100">
+        </div>
+        <div class="title-card">
+            <p th:text="${product.title}"></p>
+        </div>
+        <div class="d-inline-flex">
+            R$
+            <h3 th:text="${product.price}"></h3>
+        </div>
+    </div>
+</div>

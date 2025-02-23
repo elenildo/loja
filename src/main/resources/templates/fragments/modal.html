@@ -19,3 +19,26 @@
         </div>
     </div>
 </div>
+
+<div th:fragment="modal-csv-upload" class="modal fade" id="csv-upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Upload de arquivo CSV</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:action="@{/admin/products/csv}" enctype="multipart/form-data" class="form">
+                    <label for="file">Selecione um arquivo CSV</label>
+                    <input type="file" name="file" id="file" accept=".xlsx, .xls, .csv" class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="save-csv" class="btn btn-primary d-none">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

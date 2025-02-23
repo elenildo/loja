@@ -9,19 +9,15 @@
 <body>
 <div th:replace="~{fragments/site :: menu}"></div>
 <div th:replace="~{fragments/modal :: modal-confirm}"></div>
+<div th:replace="~{fragments/modal :: modal-csv-upload}"></div>
 
 <div class="container">
     <nav class="nav border mt-2 mb-4 mb-4 bg-light justify-content-between">
         <span class="nav-link font-weight-bold">Produtos</span>
-        <div>
-            <form method="post" th:action="@{/admin/products/csv}" enctype="multipart/form-data">
-                <label for="file">Subir CSV</label>
-                <input type="file" name="file" id="file" accept=".xlsx, .xls, .csv">
-                <button>OK</button>
-            </form>
-            <a class="nav-link active" href="/admin/products/create">Novo</a>
+        <div class="d-flex align-items-center">
+            <a class="nav-link"  data-toggle="modal" data-target="#csv-upload-modal" role="button">Upload CSV</a>
+            <a class="nav-link" href="/admin/products/create">Novo</a>
         </div>
-
     </nav>
     <div th:replace="~{fragments/site :: messages}"></div>
     <table id="table-products" class="table table-sm table-striped table-bordered nowrap w-100">
@@ -42,5 +38,14 @@
 <div th:replace="~{fragments/site :: scripts}"></div>
 <div th:replace="~{fragments/site :: datatables-js}"></div>
 <script th:src="@{/js/products.js}"></script>
+<script>
+    $('#file').on('change', function(){
+        if ($('#file')[0].files.length > 0)
+            $('#save-csv').removeClass('d-none')
+    })
+    $('button').on('click', function() {
+        $('#save-csv').addClass('d-none')
+    })
+</script>
 </body>
 </html>

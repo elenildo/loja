@@ -134,12 +134,14 @@ public class ProductService {
 
     private void saveCsvFileToDatabase(String fullPath) throws IOException, CsvException {
         var rows = readCsvFile(fullPath);
+        String idCol;
         List<Product> products = new ArrayList<>();
 
         for(String[] row : rows) {
             if(row.length < 5) continue;
             var product  = new Product();
-            product.setId(row[0].isEmpty() ? null : Long.valueOf(row[0].replaceAll("\\uFEFF", "")));
+            idCol = row[0].replaceAll("\\uFEFF", "");
+            product.setId(idCol.isEmpty() ? null : Long.valueOf(idCol));
             product.setTitle(row[1].isEmpty() ? null : row[1]);
             product.setDescription(row[2]);
             product.setPrice(row[3].isEmpty() ? new BigDecimal(0) : new BigDecimal(row[3]));

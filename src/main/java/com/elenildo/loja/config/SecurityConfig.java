@@ -20,7 +20,8 @@ public class SecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .logout(config -> config.logoutSuccessUrl("/"))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/").permitAll();
+                    authorize.requestMatchers("/", "/upload/**", "/css/**", "/js/**").permitAll();
+                    authorize.requestMatchers("/public").permitAll();
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers("/logout").permitAll();
                     authorize.requestMatchers("/register").permitAll();
@@ -42,4 +43,5 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

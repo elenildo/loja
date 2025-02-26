@@ -20,6 +20,8 @@ public class ProductCardDto {
         id = product.getId();
         title = product.getTitle();
         price = product.getPrice();
-        image = product.getImages() == null ? null : product.getImages().stream().findFirst().get();
+        image = product.getImages() == null || product.getImages().isEmpty() ?
+                null :
+                product.getImages().stream().findFirst().get();
     }
 }

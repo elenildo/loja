@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -34,7 +35,9 @@ public class ProductDto {
     @NotNull
     private Category category;
 
-    private Set<MultipartFile> images;
+    private List<MultipartFile> images;
+
+    private Set<String> imageSources;
 
     public ProductDto(Product product) {
         id = product.getId();
@@ -42,5 +45,6 @@ public class ProductDto {
         description = product.getDescription();
         price = product.getPrice();
         category = product.getCategory();
+        imageSources = product.getImages();
     }
 }

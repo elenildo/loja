@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/site :: header}"></div>
+    <title>Detalhes do Produto</title>
+</head>
+<body>
+    <div th:replace="~{fragments/site :: menu}"></div>
+    <div class="container">
+        <nav class="nav border mt-2 mb-4 mb-4 bg-light justify-content-between">
+            <span th:text="${product.title}" class="nav-link font-weight-bold"></span>
+            <div class="d-flex align-items-center">
+                <a class="nav-link" onclick="history.back()" href="#">Voltar</a>
+            </div>
+        </nav>
+        <div class="row">
+            <div th:each="img : ${product.imageSources}" class="col-3">
+                <img th:if="${img != null}" th:src="@{${img}}" class="w-100 border">
+            </div>
+            <div class="col-12">
+                <h3 th:text="${'R$ ' + product.price}" class="mt-2"></h3>
+                <button class="btn btn-primary btn-lg">COMPRAR</button>
+                <hr>
+                <h3>Descrição</h3>
+                <p th:text="${product.description}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/site :: scripts}"></div>
+</body>
+</html>

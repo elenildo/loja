@@ -4,9 +4,7 @@ import com.elenildo.loja.enums.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -20,15 +18,10 @@ public class SecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .logout(config -> config.logoutSuccessUrl("/"))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/", "/upload/**", "/css/**", "/js/**").permitAll();
-                    authorize.requestMatchers("/public").permitAll();
-                    authorize.requestMatchers("/login").permitAll();
-                    authorize.requestMatchers("/logout").permitAll();
-                    authorize.requestMatchers("/register").permitAll();
-                    authorize.requestMatchers("/contato").permitAll();
                     authorize.requestMatchers("/admin/**")
                             .hasAnyRole(UserRole.ADMIN.name(), UserRole.MANAGER.name());
-                    authorize.anyRequest().authenticated();
+                    authorize.requestMatchers("/user/profile/**").authenticated();
+                    authorize.anyRequest().permitAll();
                 })
                 .formLogin(configurer -> {
                     configurer

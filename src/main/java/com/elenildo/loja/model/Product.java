@@ -1,5 +1,6 @@
 package com.elenildo.loja.model;
 
+import com.elenildo.loja.dto.ProductCsvDto;
 import com.elenildo.loja.dto.ProductDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

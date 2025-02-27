@@ -1,12 +1,10 @@
 package com.elenildo.loja.config;
 
-import com.elenildo.loja.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +24,12 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
 
-            jdbcTemplate
-                    .query("SELECT id, title FROM products", new DataClassRowMapper<>(Product.class))
-                    .forEach(product -> log.info("Found <{}> in the database.", product));
+//            jdbcTemplate
+//                    .query("SELECT id, title FROM products", new DataClassRowMapper<>(Product.class))
+//                    .forEach(product -> log.info("Found <{}> in the database.", product));
+            log.info("Encontrados [{}] registros na base de dados.", jdbcTemplate
+                    .queryForObject("SELECT COUNT(*) as total FROM products", Integer.class));
+
         }
     }
 }

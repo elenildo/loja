@@ -47,9 +47,9 @@
         </div>
     </nav>
 
-    <ul class="nav border-bottom bg-primary-subtle" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
+    <ul class="nav bg-primary" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
         <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            <a class="nav-link dropdown-toggle bg-primary text-white" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 Root
             </a>
             <div class="dropdown-menu">
@@ -61,10 +61,10 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/admin/categories">Categorias</a>
+            <a class="nav-link bg-primary text-white" href="/admin/categories">Categorias</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/admin/products">Produtos</a>
+            <a class="nav-link bg-primary text-white" href="/admin/products">Produtos</a>
         </li>
 
     </ul>

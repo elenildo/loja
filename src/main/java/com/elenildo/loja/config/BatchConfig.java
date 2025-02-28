@@ -1,7 +1,6 @@
 package com.elenildo.loja.config;
 
 import com.elenildo.loja.dto.ProductCsvDto;
-import com.elenildo.loja.model.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -19,7 +18,6 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.PathResource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -36,7 +34,7 @@ public class BatchConfig {
     public FlatFileItemReader<ProductCsvDto> reader() throws MalformedURLException {
         return new FlatFileItemReaderBuilder<ProductCsvDto>()
                 .name("productItemReader")
-                .resource(new ClassPathResource("/static/upload/csv/products/lanc.csv"))
+                .resource(new ClassPathResource("/static/upload/csv/products/produtos.csv"))
                 .strict(false)
                 .delimited()
                 .names("id", "title", "description", "price", "category")
@@ -52,7 +50,8 @@ public class BatchConfig {
     @Bean
     public JdbcBatchItemWriter<ProductCsvDto> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<ProductCsvDto>()
-                .sql("INSERT INTO products (title, description, price, category_id) VALUES (:title, :description, :price, :category)")
+                .sql("INSERT INTO products (title, description, price, category_id, creation_date, alter_date)" +
+                        " VALUES (:title, :description, :price, :category, :creationDate, :alterDate)")
                 .dataSource(dataSource)
                 .beanMapped()
                 .build();

@@ -121,8 +121,9 @@ public class ProductService {
         fullPath = uploadDirectory + file.getOriginalFilename();
         path = Paths.get(fullPath);
         Files.write(path, bytes);
-
+        var start = System.currentTimeMillis();
         saveCsvFileToDatabase(fullPath);
+        System.out.println("TEMPO DE PROCESSAMENTO: "+(System.currentTimeMillis() - start)+" ms");
         removeFile(fullPath);
     }
 

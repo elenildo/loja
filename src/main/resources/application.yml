@@ -18,6 +18,9 @@ spring:
 #      ddl-auto: none
 #  thymeleaf:
 #    cache: false
+#  batch:
+#    jdbc:
+#      initialize-schema: always
 #upload:
 #  images: src/main/resources/static/upload/images/
 #  csv: src/main/resources/static/upload/csv/

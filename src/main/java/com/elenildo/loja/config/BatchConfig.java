@@ -71,7 +71,7 @@ public class BatchConfig {
                       FlatFileItemReader<ProductCsvDto> reader, ItemProcessor<ProductCsvDto,
                     Future<ProductCsvDto>> processor, ItemWriter<Future<ProductCsvDto>> writer) {
         return new StepBuilder("step1", jobRepository)
-                .<ProductCsvDto, Future<ProductCsvDto>>chunk(20, transactionManager)
+                .<ProductCsvDto, Future<ProductCsvDto>>chunk(100, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
+import java.time.LocalDateTime;
+
 
 public class ProductItemProcessor implements ItemProcessor<ProductCsvDto,ProductCsvDto> {
     private static final Logger log = LoggerFactory.getLogger(ProductItemProcessor.class);
@@ -19,6 +21,8 @@ public class ProductItemProcessor implements ItemProcessor<ProductCsvDto,Product
         prod.setDescription(productCsvDto.getDescription());
         prod.setPrice(productCsvDto.getPrice());
         prod.setCategory(productCsvDto.getCategory());
+        prod.setAlterDate(LocalDateTime.now());
+        prod.setCreationDate(LocalDateTime.now());
         return prod;
     }
 }

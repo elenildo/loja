@@ -16,7 +16,7 @@
         </nav>
         <div class="row">
             <div th:each="img : ${product.imageSources}" class="col-3">
-                <img th:if="${img != null}" th:src="@{${img}}" class="w-100 border">
+                <img th:if="${img != null}" th:src="@{${img}}" class="w-100 bg-white">
             </div>
             <div class="col-12">
                 <h3 th:text="${'R$ ' + product.price}" class="mt-2"></h3>

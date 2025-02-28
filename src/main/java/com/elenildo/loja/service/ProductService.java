@@ -75,7 +75,7 @@ public class ProductService {
         datatables.setRequest(request);
         datatables.setColunas(DatatablesColunas.PRODUCTS);
         Page<?> page = datatables.getSearch().isEmpty()?
-                productRepository.findAll(datatables.getPageable()):
+                productRepository.findAllPageable(datatables.getPageable()):
                 productRepository.findAllByTitleContaining(datatables.getSearch(), datatables.getPageable());
         return datatables.getResponse(page);
 
@@ -152,6 +152,6 @@ public class ProductService {
     }
 
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return productRepository.getAll();
     }
 }

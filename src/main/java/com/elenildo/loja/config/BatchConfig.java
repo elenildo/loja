@@ -8,6 +8,10 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.integration.async.AsyncItemProcessor;
+import org.springframework.batch.integration.async.AsyncItemWriter;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -16,11 +20,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.PathResource;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.net.MalformedURLException;
+import java.util.concurrent.Future;
 
 @Configuration
 @AllArgsConstructor
@@ -62,9 +68,10 @@ public class BatchConfig {
 
     @Bean
     public Step step1(JobRepository jobRepository, DataSourceTransactionManager transactionManager,
-                      FlatFileItemReader<ProductCsvDto> reader, ProductItemProcessor processor, JdbcBatchItemWriter<ProductCsvDto> writer) {
+                      FlatFileItemReader<ProductCsvDto> reader, ItemProcessor<ProductCsvDto,
+                    Future<ProductCsvDto>> processor, ItemWriter<Future<ProductCsvDto>> writer) {
         return new StepBuilder("step1", jobRepository)
-                .<ProductCsvDto, ProductCsvDto>chunk(5, transactionManager)
+                .<ProductCsvDto, Future<ProductCsvDto>>chunk(20, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
@@ -75,6 +82,23 @@ public class BatchConfig {
     @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    public ItemProcessor<ProductCsvDto, Future<ProductCsvDto>> asyncProcessor(
+            ItemProcessor<ProductCsvDto,ProductCsvDto> processor,
+            TaskExecutor taskExecutor) {
+        var asyncProcessor = new AsyncItemProcessor<ProductCsvDto,ProductCsvDto>();
+        asyncProcessor.setTaskExecutor(taskExecutor);
+        asyncProcessor.setDelegate(processor);
+        return asyncProcessor;
+    }
+
+    @Bean
+    public ItemWriter<Future<ProductCsvDto>> asyncWriter(ItemWriter<ProductCsvDto> writer ) {
+        var asyncWriter = new AsyncItemWriter<ProductCsvDto>();
+        asyncWriter.setDelegate(writer);
+        return asyncWriter;
     }
 
 }

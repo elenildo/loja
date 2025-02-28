@@ -31,7 +31,6 @@ public class ProductController {
     @GetMapping
     public ModelAndView index() {
         var mv = new ModelAndView("admin/products/index");
-        mv.addObject("products", productService.findAll());
         return mv.addObject("productDto", new ProductDto());
     }
 

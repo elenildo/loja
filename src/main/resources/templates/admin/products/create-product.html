@@ -38,6 +38,11 @@
             <textarea th:field="*{description}" id="description" class="form-control"></textarea>
             <p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger" th:errors="*{description}"></p>
         </div>
+        <div class="d-flex mb-3">
+            <div th:each="imgUrl : ${productDto.imageSources}" class="form-img-list">
+                <img th:src="@{ ${imgUrl} }" class="w-100" th:alt="${imgUrl}">
+            </div>
+        </div>
         <div class="mb-3">
             <label for="images" class="form-label">Imagens</label>
             <input type="file" th:field="*{images}" id="images" multiple

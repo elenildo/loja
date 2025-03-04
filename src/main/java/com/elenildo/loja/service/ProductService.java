@@ -109,7 +109,7 @@ public class ProductService {
         if(product.isPresent()){
             if(product.get().getImages() != null)
                 product.get().getImages()
-                        .forEach(path -> removeFile("src/main/resources/static/"+path));
+                        .forEach(path -> removeFile(imagesDirectory + path));
         }
     }
 
@@ -117,7 +117,7 @@ public class ProductService {
         Set<String> toRemoveList = prod.getImages().stream()
                 .filter(url -> !imgUrls.contains(url)).collect(Collectors.toSet());
 
-        toRemoveList.forEach(path -> removeFile("src/main/resources/static/"+path));
+        toRemoveList.forEach(path -> removeFile(imagesDirectory + path));
         prod.setImages(imgUrls);
         return prod;
     }

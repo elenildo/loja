@@ -42,7 +42,7 @@
             <div th:each="imgUrl : ${productDto.imageSources}" class="form-img-list">
                 <input type="checkbox" th:field="*{imageSources}" th:value="${imgUrl}" th:id="${imgUrl}">
                 <label th:for="${imgUrl}">
-                    <img th:src="@{ ${imgUrl} }" class="w-100" th:alt="${imgUrl}">
+                    <img th:src="@{'/image/' + ${imgUrl} }" class="w-100" th:alt="${imgUrl}">
                 </label>
             </div>
         </div>

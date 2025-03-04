@@ -15,10 +15,12 @@ $(document).ready(function () {
             {orderable: false,
             data: 'images',
                 "render": function(images, type, data) {
-                    if(images != null && type=='display'){
-                        data = `<img src="${images[0]}" class="w-50"/>`;
-                    return data;
-                    }
+                    if(images != null && images.length > 0 && type=='display')
+                        data = `<img src="/image/${images[0]}" class="w-50"/>`;
+                    else
+                        data = `<img src="/img/prod-not-found.webp" class="w-50"/>`;
+
+                    return data
                 }
             },
             {data: 'id'},

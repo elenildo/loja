@@ -2,7 +2,7 @@
     <a th:href="@{'/product/'+${product.id}}" class="text-decoration-none text-body">
         <div class="d-flex flex-column mt-4 shadow p-3 bg-white" style="height:300px">
             <div class="d-flex mb-2 justify-content-center align-items-center">
-                <img th:if="${product.image != null}" th:src="@{${product.image}}" class="card-img">
+                <img th:if="${product.image != null}" th:src="@{'/image/'+ ${product.image}}" class="card-img">
                 <img th:unless="${product.image != null}" th:src="@{/img/prod-not-found.webp}" class="card-img">
             </div>
             <div class="title-card">

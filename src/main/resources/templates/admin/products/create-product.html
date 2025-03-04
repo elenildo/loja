@@ -15,7 +15,7 @@
 
     <form th:object="${productDto}" th:action="@{/admin/products}" method="POST" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" th:value="${id}">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
         <div class="mb-3">
             <label for="category" class="form-label">Categoria *</label>
             <select id="category" th:field="*{category}" class="form-control">
@@ -38,16 +38,54 @@
             <textarea th:field="*{description}" id="description" class="form-control"></textarea>
             <p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger" th:errors="*{description}"></p>
         </div>
+        <div class="d-flex mb-3">
+            <div th:each="imgUrl : ${productDto.imageSources}" class="form-img-list">
+                <input type="checkbox" th:field="*{imageSources}" th:value="${imgUrl}" th:id="${imgUrl}">
+                <label th:for="${imgUrl}">
+                    <img th:src="@{ ${imgUrl} }" class="w-100" th:alt="${imgUrl}">
+                </label>
+            </div>
+        </div>
         <div class="mb-3">
             <label for="images" class="form-label">Imagens</label>
             <input type="file" th:field="*{images}" id="images" multiple
                    accept=".jpg, .jpeg, .png, .gif, .bmp, .webp" class="form-control">
             <p th:if="${#fields.hasErrors('images')}" th:errorclass="text-danger" th:errors="*{images}"></p>
         </div>
+
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 </div>
 
 <div th:replace="~{fragments/site :: scripts}"></div>
+<script>
+
+            let dados = {
+                "urls": ["/teste", "/outro"]
+            }
+<!--            var token =  $('input[name="_csrf"]').attr('value')-->
+<!--             $.ajaxSetup({-->
+<!--                beforeSend: function(xhr) {-->
+<!--                    xhr.setRequestHeader('Csrf-Token', token);-->
+<!--                }-->
+<!--            })-->
+<!--            console.log(token)-->
+
+            $.ajax({
+                method: "POST",
+                url: `http://localhost:8090/admin/products/remove/images/1`,
+                cache: false,
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data)
+                },
+                statusCode: {
+                },
+                complete: function() {
+                },
+                data: JSON.stringify(dados)
+            })
+
+</script>
 </body>
 </html>

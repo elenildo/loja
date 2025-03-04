@@ -22,15 +22,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final Datatables datatables;
-
-    @Value("${upload.images}")
-    private String homeDirectory;
 
     @Value("${upload.csv}")
     private String csvDirectory;
@@ -44,28 +42,24 @@ public class ProductService {
         return productRepository.existsByTitleIgnoreCase(title);
     }
 
-    public void create(ProductDto productDto, MultipartFile[] files) throws IOException {
+    public void create(ProductDto productDto, Set<String> previousImgList) throws IOException {
         var product = new Product(productDto);
-        product.setImages(saveFiles(files));
+        product.setImages(previousImgList);
+        product = removeFiles(product, productDto.getImageSources()); //remove images unchecked from form
+        product.getImages().addAll(saveFiles(productDto.getImages())); //list of MultipartFile
         productRepository.save(product);
     }
 
-    private Set<String> saveFiles(MultipartFile[] files) throws IOException {
+    private Set<String> saveFiles(List<MultipartFile> files) throws IOException {
         Set<String> paths = new HashSet<>();
-        String uploadDirectory = homeDirectory+"products/";
-        File directory = new File(uploadDirectory);
-        Path path;
-        String fullPath;
-
-        if (!directory.exists())
-            directory.mkdirs();
+        final String uploadLocation = getClass().getClassLoader()
+                .getResource("static/upload/images/products/").toString(); //target folder
 
         for (MultipartFile file : files) {
             if(file.isEmpty()) continue;
             byte[] bytes = file.getBytes();
-            fullPath = uploadDirectory + file.getOriginalFilename();
-            path = Paths.get(fullPath);
-            Files.write(path, bytes);
+            final Path uploadDirectoryPath = Paths.get(uploadLocation.substring(5)+file.getOriginalFilename() );
+            Files.write(uploadDirectoryPath, bytes);
             paths.add("/upload/images/products/" + file.getOriginalFilename());
         }
         return paths;
@@ -97,6 +91,15 @@ public class ProductService {
                 product.get().getImages()
                         .forEach(path -> removeFile("src/main/resources/static/"+path));
         }
+    }
+
+    public Product removeFiles(Product prod, Set<String> imgUrls) {
+        Set<String> toRemoveList = prod.getImages().stream()
+                .filter(url -> !imgUrls.contains(url)).collect(Collectors.toSet());
+
+        toRemoveList.forEach(path -> removeFile("src/main/resources/static/"+path));
+        prod.setImages(imgUrls);
+        return prod;
     }
 
     private void removeFile(String fullPath) {

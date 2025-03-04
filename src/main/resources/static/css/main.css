@@ -4,3 +4,9 @@ body{
 .card-img{
     width: 150px;
 }
+.form-img-list{
+    width: 150px;
+    padding:5px;
+    border:1px solid #ccc;
+    margin-right:5px;
+}

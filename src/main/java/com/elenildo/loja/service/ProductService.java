@@ -33,6 +33,9 @@ public class ProductService {
     @Value("${upload.csv}")
     private String csvDirectory;
 
+    @Value("${upload.images}")
+    private String imagesDirectory;
+
     public ProductService(ProductRepository productRepository, Datatables datatables) {
         this.productRepository = productRepository;
         this.datatables = datatables;
@@ -46,7 +49,7 @@ public class ProductService {
         var product = new Product(productDto);
         product.setImages(previousImgList);
         product = removeFiles(product, productDto.getImageSources()); //remove images unchecked from form
-        product.getImages().addAll(saveFiles(productDto.getImages())); //list of MultipartFile
+        product.getImages().addAll(saveFilesCustomFolder(productDto.getImages())); //list of MultipartFile
         productRepository.save(product);
     }
 
@@ -61,6 +64,23 @@ public class ProductService {
             final Path uploadDirectoryPath = Paths.get(uploadLocation.substring(5)+file.getOriginalFilename() );
             Files.write(uploadDirectoryPath, bytes);
             paths.add("/upload/images/products/" + file.getOriginalFilename());
+        }
+        return paths;
+    }
+
+    private Set<String> saveFilesCustomFolder(List<MultipartFile> files) throws IOException {
+        Set<String> paths = new HashSet<>();
+
+        File directory = new File(imagesDirectory);
+        if (! directory.exists())
+            directory.mkdirs();
+
+        for (MultipartFile file : files) {
+            if(file.isEmpty()) continue;
+            byte[] bytes = file.getBytes();
+            final Path uploadDirectoryPath = Paths.get(imagesDirectory+file.getOriginalFilename() );
+            Files.write(uploadDirectoryPath, bytes);
+            paths.add(file.getOriginalFilename());
         }
         return paths;
     }

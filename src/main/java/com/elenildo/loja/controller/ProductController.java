@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("admin/products")
@@ -70,8 +72,11 @@ public class ProductController {
             model.addAttribute("categories", categoryService.getAll()); //Reloads category list
             return "admin/products/create-product";
         }
+
+        Set<String> previousImgList = product.isPresent() ? product.get().getImages() : new HashSet<>();
+
         try {
-            productService.create(productDto, images);
+            productService.create(productDto, previousImgList);
         }catch (Exception e) {
             model.addAttribute("categories", categoryService.getAll()); //Reloads category list
             result.addError(new FieldError(

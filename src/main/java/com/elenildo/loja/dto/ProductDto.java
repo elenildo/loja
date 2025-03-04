@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class ProductDto {
 
     private List<MultipartFile> images;
 
-    private Set<String> imageSources;
+    private Set<String> imageSources = new HashSet<>();
 
     public ProductDto(Product product) {
         id = product.getId();

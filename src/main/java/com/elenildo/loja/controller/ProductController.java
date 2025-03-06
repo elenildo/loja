@@ -72,8 +72,12 @@ public class ProductController {
             model.addAttribute("categories", categoryService.getAll()); //Reloads category list
             return "admin/products/create-product";
         }
+        Set<String> previousImgList = new HashSet<>();
 
-        Set<String> previousImgList = product.isPresent() ? product.get().getImages() : new HashSet<>();
+        if(product.isPresent()) {
+            if(product.get().getImages() != null)
+                previousImgList = product.get().getImages();
+        }
 
         try {
             productService.create(productDto, previousImgList);

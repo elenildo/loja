@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -70,6 +71,7 @@ public class ProductService {
 
     private Set<String> saveFilesCustomFolder(List<MultipartFile> files) throws IOException {
         Set<String> paths = new HashSet<>();
+        String customFilename;
 
         File directory = new File(imagesDirectory);
         if (! directory.exists())
@@ -78,9 +80,10 @@ public class ProductService {
         for (MultipartFile file : files) {
             if(file.isEmpty()) continue;
             byte[] bytes = file.getBytes();
-            final Path uploadDirectoryPath = Paths.get(imagesDirectory+file.getOriginalFilename() );
+            customFilename = UUID.randomUUID() + "." + StringUtils.getFilenameExtension(file.getOriginalFilename());
+            final Path uploadDirectoryPath = Paths.get(imagesDirectory + customFilename);
             Files.write(uploadDirectoryPath, bytes);
-            paths.add(file.getOriginalFilename());
+            paths.add(customFilename);
         }
         return paths;
     }

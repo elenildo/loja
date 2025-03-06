@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Product extends ModelEntity{
     @ManyToOne
     private Category category;
 
-    private Set<String> images;
+    private Set<String> images = new HashSet<>();
 
     public Product(ProductDto productDto) {
         id = productDto.getId();

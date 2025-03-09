@@ -25,6 +25,8 @@ spring:
 #  batch:
 #    jdbc:
 #      initialize-schema: always
+#    job:
+#      enabled: false
 #upload:
 #  images: ${user.home}/apps/loja/images/products/
 #  csv: src/main/resources/static/upload/csv/

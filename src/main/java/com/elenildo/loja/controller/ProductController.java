@@ -7,6 +7,9 @@ import com.opencsv.exceptions.CsvException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,8 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final JobLauncher jobLauncher;
+    private final Job job;
 
     @GetMapping
     public ModelAndView index() {
@@ -111,6 +116,12 @@ public class ProductController {
         }
         productService.remove(id);
         attributes.addFlashAttribute("message", "Removido com sucesso.");
+        return "redirect:/admin/products";
+    }
+
+    @RequestMapping("/batch")
+    public String handle() throws Exception{
+        jobLauncher.run(job, new JobParameters());
         return "redirect:/admin/products";
     }
 }

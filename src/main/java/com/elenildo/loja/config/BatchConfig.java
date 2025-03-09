@@ -1,7 +1,6 @@
 package com.elenildo.loja.config;
 
 import com.elenildo.loja.dto.ProductCsvDto;
-import com.elenildo.loja.model.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,7 +14,6 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.PathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -54,7 +52,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public Job importUserJob(JobRepository jobRepository, Step step1, JobCompletionNotificationListener listener) {
+    public Job importProductJob(JobRepository jobRepository, Step step1, JobCompletionNotificationListener listener) {
         return new JobBuilder("importProductJob", jobRepository)
                 .listener(listener)
                 .start(step1)
@@ -65,7 +63,7 @@ public class BatchConfig {
     public Step step1(JobRepository jobRepository, DataSourceTransactionManager transactionManager,
                       FlatFileItemReader<ProductCsvDto> reader, ProductItemProcessor processor, JdbcBatchItemWriter<ProductCsvDto> writer) {
         return new StepBuilder("step1", jobRepository)
-                .<ProductCsvDto, ProductCsvDto>chunk(100, transactionManager)
+                .<ProductCsvDto, ProductCsvDto>chunk(200, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

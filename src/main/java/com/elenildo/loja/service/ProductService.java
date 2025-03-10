@@ -134,7 +134,7 @@ public class ProductService {
         return productRepository.findByTitleIgnoreCase(title);
     }
 
-    public void saveCsvFile(MultipartFile file) throws IOException, CsvException {
+    public void saveCsvFile(MultipartFile file) throws IOException, CsvException, InterruptedException {
         String uploadDirectory = csvDirectory+"products/";
         File directory = new File(uploadDirectory);
         Path path;
@@ -157,7 +157,7 @@ public class ProductService {
         return reader.readAll();
     }
 
-    private void saveCsvFileToDatabase(String fullPath) throws IOException, CsvException {
+    private void saveCsvFileToDatabase(String fullPath) throws IOException, CsvException, InterruptedException {
         var rows = readCsvFile(fullPath);
         String idCol;
         List<Product> products = new ArrayList<>();
@@ -172,6 +172,7 @@ public class ProductService {
             product.setPrice(row[3].isEmpty() ? new BigDecimal(0) : new BigDecimal(row[3]));
             product.setCategory(row[4].isEmpty() ? null : new Category(Long.parseLong(row[4])));
             products.add(product);
+            Thread.sleep(10);
         }
         productRepository.saveAll(products);
 

@@ -43,7 +43,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public ProductItemProcessor processor() {
+    public ProductItemProcessor processor() throws InterruptedException {
         return new ProductItemProcessor();
     }
 

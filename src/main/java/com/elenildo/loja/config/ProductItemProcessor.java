@@ -23,6 +23,7 @@ public class ProductItemProcessor implements ItemProcessor<ProductCsvDto,Product
         prod.setCategory(productCsvDto.getCategory());
         prod.setCreationDate(LocalDateTime.now());
         prod.setAlterDate(LocalDateTime.now());
+        Thread.sleep(10);
         return prod;
     }
 }

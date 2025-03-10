@@ -63,7 +63,7 @@ public class BatchConfig {
     public Step step1(JobRepository jobRepository, DataSourceTransactionManager transactionManager,
                       FlatFileItemReader<ProductCsvDto> reader, ProductItemProcessor processor, JdbcBatchItemWriter<ProductCsvDto> writer) {
         return new StepBuilder("step1", jobRepository)
-                .<ProductCsvDto, ProductCsvDto>chunk(200, transactionManager)
+                .<ProductCsvDto, ProductCsvDto>chunk(100, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

@@ -101,7 +101,7 @@ public class ProductController {
     public String uploadCsv(@RequestParam("file") MultipartFile file, Model model) {
         try {
             productService.saveCsvFile(file);
-        } catch (IOException | CsvException e) {
+        } catch (IOException | CsvException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         return "redirect:/admin/products";

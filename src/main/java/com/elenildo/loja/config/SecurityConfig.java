@@ -18,10 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
 //                .cors(AbstractHttpConfigurer::disable)
 //                .httpBasic(withDefaults())
-                .logout(config -> config.logoutSuccessUrl("/"))
+                .logout(config -> config.logoutSuccessUrl("/").permitAll())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/admin/**")
                             .hasAnyRole(UserRole.ADMIN.name(), UserRole.MANAGER.name());
